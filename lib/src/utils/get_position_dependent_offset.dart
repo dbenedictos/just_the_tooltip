@@ -46,8 +46,7 @@ Offset getPositionDependentOffset({
       final targetHeightRadius = targetSize.height / 2;
       final bottomTargetEdge = target.dy + targetHeightRadius;
       final topTargetEdge = target.dy - targetHeightRadius;
-      final hasVerticalScroll =
-          scrollPosition != null && scrollPosition.axis == Axis.vertical;
+      final hasVerticalScroll = scrollPosition != null && scrollPosition.axis == Axis.vertical;
 
       double y;
       if (tooltipAbove) {
@@ -60,10 +59,7 @@ Offset getPositionDependentOffset({
         if (hasVerticalScroll) {
           y = bottomTargetEdge + offsetAndTail;
         } else {
-          y = math.min(
-            bottomTargetEdge + offsetAndTail,
-            size.height - margin.top,
-          );
+          y = math.min(bottomTargetEdge + offsetAndTail, size.height - margin.top);
         }
       }
 
@@ -72,16 +68,16 @@ Offset getPositionDependentOffset({
       if (size.width - margin.horizontal < childSize.width) {
         x = math.max(margin.left, (size.width - childSize.width) / 2.0);
       } else {
-        final normalizedTargetX = target.dx.clamp(
-          margin.left,
-          size.width - margin.right,
-        );
-        final edge = margin.left + childSize.width / 2.0;
+        final normalizedTargetX = target.dx.clamp(margin.left, size.width - margin.right);
+        final childHalfWidth = childSize.width / 2.0;
+        final leftEdge = margin.left + childHalfWidth;
+        final rightEdge = size.width - childHalfWidth - margin.right;
 
-        if (normalizedTargetX < edge) {
+        // check if [normalizedTargetX] will exceed boundaries
+        if (normalizedTargetX < leftEdge) {
           x = margin.left;
-        } else if (normalizedTargetX > size.width - edge) {
-          x = size.width - margin.left - childSize.width;
+        } else if (normalizedTargetX > rightEdge) {
+          x = size.width - margin.right - childSize.width;
         } else {
           x = normalizedTargetX - childSize.width / 2.0;
         }
@@ -95,8 +91,7 @@ Offset getPositionDependentOffset({
       final targetWidthRadius = targetSize.width / 2;
       final rightTargetEdge = target.dx + targetWidthRadius;
       final leftTargetEdge = target.dx - targetWidthRadius;
-      final hasHorizontalScroll =
-          scrollPosition != null && scrollPosition.axis == Axis.horizontal;
+      final hasHorizontalScroll = scrollPosition != null && scrollPosition.axis == Axis.horizontal;
 
       double x;
       if (tooltipLeft) {
@@ -109,10 +104,7 @@ Offset getPositionDependentOffset({
         if (hasHorizontalScroll) {
           x = rightTargetEdge + offsetAndTail;
         } else {
-          x = math.min(
-            rightTargetEdge + offsetAndTail,
-            size.width - margin.right,
-          );
+          x = math.min(rightTargetEdge + offsetAndTail, size.width - margin.right);
         }
       }
 
@@ -121,10 +113,7 @@ Offset getPositionDependentOffset({
       if (size.height - margin.vertical < childSize.height) {
         y = (size.height - childSize.height) / 2.0;
       } else {
-        final normalizedTargetY = target.dy.clamp(
-          margin.top,
-          size.height - margin.bottom,
-        );
+        final normalizedTargetY = target.dy.clamp(margin.top, size.height - margin.bottom);
         final edge = (margin.bottom + childSize.height) / 2.0;
 
         if (normalizedTargetY < edge) {
